@@ -54,7 +54,21 @@ class Loop
 	 */
 	public function thumbnail($size = null, $attr = null)
 	{
-		return get_the_post_thumbnail(static::id(), $size, $attr);
+		return get_the_post_thumbnail($this->id(), $size, $attr);
+	}
+	
+	/**
+	 * Get thumbnail url of current post.
+	 *
+	 * @param string|array $size The size of the current post thumbnail.
+	 * @param bool $icon
+	 * @return null|string
+	 */
+	public function thumbnailUrl($size = null, $icon = false)
+	{
+		$data = wp_get_attachment_image_src(get_post_thumbnail_id($this->id()), $size, $icon);
+
+		return (empty($data)) ? null : $data[0];
 	}
 
 	/**
@@ -97,7 +111,18 @@ class Loop
 	 */
 	public function terms($taxonomy)
 	{
-		return get_the_terms(static::id(), $taxonomy);
+		return get_the_terms($this->id(), $taxonomy);
+	}
+	
+	/**
+	 * Get the date of the current post.
+	 *
+	 * @param string $d Date format.
+	 * @return string The date of the current post.
+	 */
+	public function date($d = '')
+	{
+		return get_the_date($d);
 	}
 
 	/**
